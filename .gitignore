@@ -1,0 +1,11 @@
+﻿# Ignore local editor metadata
+.vscode/
+__pycache__/
+*.pyc
+*.tmp
+*.log
+
+# Ignore generated build artifacts
+build/
+dist/
+*.spec
