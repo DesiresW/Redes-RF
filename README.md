@@ -1,17 +1,23 @@
 ﻿# Redes RF
 
-Este repositorio contiene el material del curso de Redes RF.
+Repositorio con el material del curso de Redes RF, prácticas, referencias y herramientas de apoyo.
 
 ## Estructura
-- 00_Recursos/Libro/libro.pdf
-- 00_Recursos/Manuales/hm5010_manu.pdf
-- 01_Practicas/Practica_0/
-- 02_Software/RFExplorerWindowsSuiteSetup_v3.27.2604.02/
+- `00_Recursos/Libro/libro.pdf`
+- `00_Recursos/Manuales/hm5010_manu.pdf`
+- `01_Practicas/Practica_0/`
+- `02_Software/RFExplorerWindowsSuiteSetup_v3.27.2604.02/`
 
-## Requisitos para subir a Git
-1. Inicializar el repositorio: git init
-2. Crear una rama principal: git branch -M main
-3. Añadir archivos: git add .
-4. Crear el primer commit: git commit -m "Initial commit"
-5. Conectar el remoto: git remote add origin <URL_DEL_REPO>
-6. Empujar: git push -u origin main
+## Contenido
+- Bibliografía del curso
+- Prácticas y muestras de laboratorio
+- Manuales y documentación técnica
+- Software de apoyo para RF Explorer
+
+## Clonar
+```bash
+git clone https://github.com/DesiresW/Redes-RF.git
+```
+
+## Repositorio
+- GitHub: https://github.com/DesiresW/Redes-RF
