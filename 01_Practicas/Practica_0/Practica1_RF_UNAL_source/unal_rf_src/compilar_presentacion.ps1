@@ -47,8 +47,8 @@ try {
         throw "No se pudo añadir Main.pdf al índice de Git."
     }
 
-    & $git.Source "-C" $repoRoot "diff" "--cached" "--quiet" "--" $relativePdf
-    $hasStagedChanges = $LASTEXITCODE -ne 0
+    $stagedPdf = & $git.Source "-C" $repoRoot "diff" "--cached" "--name-only" "--" $relativePdf
+    $hasStagedChanges = @($stagedPdf).Count -gt 0
     if ($hasStagedChanges) {
         $commitMessage = "Update compiled RF presentation"
         & $git.Source "-C" $repoRoot "commit" "-m" $commitMessage "-m" "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
