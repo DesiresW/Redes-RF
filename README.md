@@ -71,6 +71,56 @@ git push origin main
 Si hay cambios locales en `Main.tex`, el script no los descarta. Los archivos
 temporales de LaTeX están excluidos por `.gitignore`.
 
+### Empezar una sesión de trabajo
+
+Después de clonar el repositorio, abre la carpeta raíz `Redes RF` en VS Code.
+La carpeta raíz correcta es la que contiene `.git`, `README.md`, `00_Recursos`,
+`01_Practicas` y `02_Software`.
+
+Antes de editar, actualiza tu copia local:
+
+```powershell
+git fetch origin
+git status
+git pull --ff-only origin main
+```
+
+`git pull --ff-only` actualiza el espacio de trabajo únicamente cuando no hay
+divergencias. Si Git informa que tienes cambios locales, no fuerces el pull:
+
+```powershell
+git status
+git add <archivos-que-quieras-conservar>
+git commit -m "Describe tus cambios"
+git pull --rebase origin main
+```
+
+Si todavía no quieres crear un commit, guarda temporalmente los cambios:
+
+```powershell
+git stash push -u -m "Trabajo local antes de actualizar"
+git pull --ff-only origin main
+git stash pop
+```
+
+Si `git stash pop` produce conflictos, resuélvelos en VS Code, prueba la
+compilación y crea un commit. Nunca uses `git reset --hard` para resolverlo sin
+haber guardado antes tu trabajo.
+
+Cuando termines una sesión:
+
+```powershell
+git status
+git add <archivos-editados>
+git commit -m "Describe tus cambios"
+git push origin main
+```
+
+Si varias personas trabajan en paralelo, actualiza de nuevo con
+`git pull --rebase origin main` antes de hacer `push`. La secuencia recomendada
+es: actualizar, editar, compilar, revisar `Main.pdf`, hacer commit y finalmente
+hacer `push`.
+
 ### Extensiones recomendadas para VS Code
 
 - **LaTeX Workshop** (`James-Yu.latex-workshop`): compilación, visor PDF y sincronización fuente-PDF.

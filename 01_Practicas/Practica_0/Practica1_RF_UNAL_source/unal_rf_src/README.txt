@@ -25,6 +25,27 @@ El script compila dos veces, reemplaza Main.pdf y crea un commit de Git
 únicamente si el PDF cambió. No hace push automáticamente; después de revisar
 el PDF se debe ejecutar `git push origin main`.
 
+Para comenzar una sesión, abre en VS Code la raíz del repositorio, la carpeta
+que contiene .git, README.md, 00_Recursos, 01_Practicas y 02_Software.
+Después actualiza el espacio de trabajo:
+  git fetch origin
+  git status
+  git pull --ff-only origin main
+
+Si hay cambios locales, primero haz commit de ellos o guárdalos temporalmente:
+  git stash push -u -m "Trabajo local antes de actualizar"
+  git pull --ff-only origin main
+  git stash pop
+
+Si varias personas trabajan en paralelo, antes de publicar cambios usa:
+  git pull --rebase origin main
+
+Al terminar:
+  git status
+  git add <archivos-editados>
+  git commit -m "Describe tus cambios"
+  git push origin main
+
 Extensiones recomendadas de VS Code:
 - LaTeX Workshop (James-Yu.latex-workshop).
 - GitLens (eamodio.gitlens), opcional.
