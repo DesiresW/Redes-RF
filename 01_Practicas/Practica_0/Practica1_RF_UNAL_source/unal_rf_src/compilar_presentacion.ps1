@@ -18,6 +18,12 @@ if ($null -eq $git) {
     throw "No se encontró Git."
 }
 
+$repoRoot = (& $git.Source "-C" $sourceDir "rev-parse" "--show-toplevel").Trim()
+if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($repoRoot)) {
+    throw "La presentación no está dentro de un repositorio Git."
+}
+$relativePdf = [IO.Path]::GetRelativePath($repoRoot, $pdfFile).Replace("\", "/")
+
 Push-Location $sourceDir
 try {
     & $pdflatex.Source "-interaction=nonstopmode" "-halt-on-error" "Main.tex"
@@ -34,12 +40,12 @@ try {
         throw "La compilación terminó sin generar Main.pdf."
     }
 
-    & $git.Source "add" "--" "Main.pdf"
+    & $git.Source "add" "--" $relativePdf
     if ($LASTEXITCODE -ne 0) {
         throw "No se pudo añadir Main.pdf al índice de Git."
     }
 
-    & $git.Source "diff" "--cached" "--quiet" "--" "Main.pdf"
+    & $git.Source "diff" "--cached" "--quiet" "--" $relativePdf
     $hasStagedChanges = $LASTEXITCODE -ne 0
     if ($hasStagedChanges) {
         $commitMessage = "Update compiled RF presentation"
