@@ -67,6 +67,18 @@ Los conflictos se resuelven en VS Code, luego se recompila y se continúa el
 rebase. Para reducir conflictos, no edites simultáneamente la misma diapositiva
 o el mismo bloque de Main.tex. No uses push --force sobre main.
 
+Edición simultánea en vivo con tres personas:
+- El anfitrión abre la raíz del repositorio en VS Code.
+- Inicia "Live Share: Start Collaboration Session".
+- Comparte el enlace con las otras dos personas.
+- Los invitados instalan MS-vsliveshare.vsliveshare y abren el enlace.
+- Todos pueden editar Main.tex al mismo tiempo.
+
+La compilación y el visor PDF deben ejecutarse en la máquina anfitriona,
+que debe tener LaTeX Workshop y la compilación automática onSave activada.
+Live Share permite editar en vivo, pero no reemplaza Git. Al finalizar,
+el anfitrión revisa Main.pdf, crea el commit integrado y ejecuta git push.
+
 Al terminar:
   git status
   git add <archivos-editados>

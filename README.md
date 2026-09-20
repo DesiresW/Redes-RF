@@ -153,8 +153,39 @@ hacer `push`.
 
 ### Trabajo simultáneo con VS Code
 
-Cada persona debe trabajar en una rama propia; no se recomienda editar y hacer
-push directamente sobre `main`:
+Para tres personas que necesiten editar el mismo documento al mismo tiempo hay
+dos mecanismos complementarios:
+
+- **VS Code Live Share** permite la edición simultánea en una misma sesión.
+- **Git y ramas** conservan el historial, permiten revisar cambios y publican
+  versiones reproducibles.
+
+Live Share es la vista colaborativa en vivo que buscabas. La persona anfitriona
+abre la carpeta raíz `Redes RF`, inicia una sesión con el comando **Live Share:
+Start Collaboration Session** y comparte el enlace con las otras dos personas.
+Cada invitado instala la extensión `MS-vsliveshare.vsliveshare`, abre el enlace
+y edita `Main.tex` en tiempo real. No es necesario que los invitados clonen
+otra copia para esa sesión.
+
+La compilación debe ejecutarse en la máquina anfitriona, que es la que tiene
+TinyTeX, LaTeX Workshop y el visor PDF. Activa `onSave` en LaTeX Workshop:
+cuando cualquiera guarda `Main.tex`, el anfitrión recompila y los tres pueden
+ver el PDF actualizado en la sesión compartida. El anfitrión debe revisar los
+mensajes de compilación y resolver conflictos de edición antes de generar el
+PDF definitivo.
+
+Live Share no sustituye Git. Al terminar una sesión colaborativa, solo el
+anfitrión debe crear el commit de la versión integrada:
+
+```powershell
+git status
+git add Main.tex imgs/ assets/ *.sty
+git commit -m "Describe la modificación integrada"
+git push origin main
+```
+
+Si se necesita revisión independiente, cada persona debe trabajar en una rama
+propia; no se recomienda editar y hacer push directamente sobre `main`:
 
 ```powershell
 git fetch origin
@@ -208,10 +239,11 @@ usen `git push --force` sobre `main`.
 ### Extensiones recomendadas para VS Code
 
 - **LaTeX Workshop** (`James-Yu.latex-workshop`): compilación, visor PDF y sincronización fuente-PDF.
+- **Live Share** (`MS-vsliveshare.vsliveshare`): edición colaborativa simultánea.
 - **GitLens** (`eamodio.gitlens`): historial y comparación de cambios.
 
-Git ya viene integrado en VS Code; GitLens es opcional. Para un equipo con pocos
-recursos, LaTeX Workshop y Git integrado son suficientes.
+Git ya viene integrado en VS Code; GitLens es opcional. Para el flujo de tres
+personas en vivo, las extensiones mínimas son LaTeX Workshop y Live Share.
 
 ## Repositorio
 - GitHub: https://github.com/DesiresW/Redes-RF
