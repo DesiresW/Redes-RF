@@ -4,6 +4,13 @@ __pycache__/
 *.pyc
 *.tmp
 *.log
+*.aux
+*.nav
+*.out
+*.snm
+*.toc
+*.fls
+*.fdb_latexmk
 
 # Ignore generated build artifacts
 build/
