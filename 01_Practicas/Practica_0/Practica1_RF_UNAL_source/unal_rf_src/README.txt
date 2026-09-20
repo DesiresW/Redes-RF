@@ -48,6 +48,25 @@ Si hay cambios locales, primero haz commit de ellos o guárdalos temporalmente:
 Si varias personas trabajan en paralelo, antes de publicar cambios usa:
   git pull --rebase origin main
 
+Para trabajar simultáneamente, cada persona debe crear una rama propia:
+  git fetch origin
+  git switch main
+  git pull --ff-only origin main
+  git switch -c nombre-corto-de-la-tarea
+
+La compilación y el visor de LaTeX Workshop funcionan de forma local dentro de
+esa rama. El ejecutable compilar_presentacion.bat crea el commit de Main.pdf en
+la rama actual. Antes de publicar, actualiza la rama:
+  git fetch origin
+  git rebase origin/main
+
+Después publica la rama y abre un Pull Request:
+  git push -u origin nombre-corto-de-la-tarea
+
+Los conflictos se resuelven en VS Code, luego se recompila y se continúa el
+rebase. Para reducir conflictos, no edites simultáneamente la misma diapositiva
+o el mismo bloque de Main.tex. No uses push --force sobre main.
+
 Al terminar:
   git status
   git add <archivos-editados>

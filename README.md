@@ -151,6 +151,60 @@ Si varias personas trabajan en paralelo, actualiza de nuevo con
 es: actualizar, editar, compilar, revisar `Main.pdf`, hacer commit y finalmente
 hacer `push`.
 
+### Trabajo simultáneo con VS Code
+
+Cada persona debe trabajar en una rama propia; no se recomienda editar y hacer
+push directamente sobre `main`:
+
+```powershell
+git fetch origin
+git switch main
+git pull --ff-only origin main
+git switch -c nombre-corto-de-la-tarea
+```
+
+Abre esa copia en VS Code, edita `Main.tex` y usa LaTeX Workshop para compilar y
+ver el PDF en tiempo real. La compilación local no modifica el trabajo de las
+otras personas. El ejecutable `compilar_presentacion.bat` crea el commit del PDF
+en la rama actual, por lo que también debe ejecutarse dentro de la rama de la
+persona que hizo la edición.
+
+Antes de publicar:
+
+```powershell
+git status
+git add Main.tex imgs/ assets/ *.sty
+git commit -m "Describe la modificación"
+git fetch origin
+git rebase origin/main
+```
+
+Si el rebase presenta conflictos, resuélvelos en VS Code, recompila y continúa:
+
+```powershell
+git add <archivos-resueltos>
+git rebase --continue
+```
+
+Después publica la rama:
+
+```powershell
+git push -u origin nombre-corto-de-la-tarea
+```
+
+Luego se integra mediante un Pull Request. Una sola persona debe revisar la
+presentación completa y fusionar el Pull Request en `main`. Después de la
+fusión, todos actualizan sus copias con:
+
+```powershell
+git switch main
+git pull --ff-only origin main
+```
+
+Para reducir conflictos, dividan el trabajo por diapositivas o bloques
+separados de `Main.tex`, y no editen simultáneamente la misma diapositiva. No
+usen `git push --force` sobre `main`.
+
 ### Extensiones recomendadas para VS Code
 
 - **LaTeX Workshop** (`James-Yu.latex-workshop`): compilación, visor PDF y sincronización fuente-PDF.
