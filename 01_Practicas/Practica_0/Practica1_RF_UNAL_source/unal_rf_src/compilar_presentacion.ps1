@@ -22,7 +22,9 @@ $repoRoot = (& $git.Source "-C" $sourceDir "rev-parse" "--show-toplevel").Trim()
 if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($repoRoot)) {
     throw "La presentación no está dentro de un repositorio Git."
 }
-$relativePdf = [IO.Path]::GetRelativePath($repoRoot, $pdfFile).Replace("\", "/")
+$repoUri = New-Object System.Uri(($repoRoot.TrimEnd("\") + "\"))
+$pdfUri = New-Object System.Uri($pdfFile)
+$relativePdf = $repoUri.MakeRelativeUri($pdfUri).ToString()
 
 Push-Location $sourceDir
 try {
@@ -40,16 +42,16 @@ try {
         throw "La compilación terminó sin generar Main.pdf."
     }
 
-    & $git.Source "add" "--" $relativePdf
+    & $git.Source "-C" $repoRoot "add" "-f" "--" $relativePdf
     if ($LASTEXITCODE -ne 0) {
         throw "No se pudo añadir Main.pdf al índice de Git."
     }
 
-    & $git.Source "diff" "--cached" "--quiet" "--" $relativePdf
+    & $git.Source "-C" $repoRoot "diff" "--cached" "--quiet" "--" $relativePdf
     $hasStagedChanges = $LASTEXITCODE -ne 0
     if ($hasStagedChanges) {
         $commitMessage = "Update compiled RF presentation"
-        & $git.Source "commit" "-m" $commitMessage "-m" "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+        & $git.Source "-C" $repoRoot "commit" "-m" $commitMessage "-m" "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
         if ($LASTEXITCODE -ne 0) {
             throw "Main.pdf quedó preparado en Git, pero el commit falló."
         }
