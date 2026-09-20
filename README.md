@@ -71,6 +71,36 @@ git push origin main
 Si hay cambios locales en `Main.tex`, el script no los descarta. Los archivos
 temporales de LaTeX están excluidos por `.gitignore`.
 
+### Preparar el espacio de trabajo con un solo ejecutable
+
+Para una persona que no necesite conocer el flujo de Git o LaTeX, después de
+clonar el repositorio puede ejecutar:
+
+[preparar_espacio_trabajo.bat](./01_Practicas/Practica_0/Practica1_RF_UNAL_source/unal_rf_src/preparar_espacio_trabajo.bat)
+
+Ese ejecutable:
+
+1. Comprueba que Git y TinyTeX/TeX Live estén instalados.
+2. Verifica que no haya cambios locales sin guardar.
+3. Descarga la versión más reciente desde `origin/main`.
+4. Actualiza `tlmgr`.
+5. Instala las dependencias TeX de la presentación.
+6. Ejecuta la compilación de dos pasadas.
+7. Actualiza `Main.pdf` y crea un commit si el PDF cambió.
+
+No hace `git push` automáticamente. Cuando se haya revisado el PDF, se debe
+ejecutar `git push origin main`. Si existen cambios locales, el ejecutable se
+detiene para evitar sobrescribirlos; primero hay que hacer commit o guardarlos
+con `git stash`.
+
+La primera preparación requiere que el equipo ya tenga instalados:
+
+- Git.
+- TinyTeX o TeX Live con `pdflatex` y `tlmgr` disponibles en el `PATH`.
+
+Después de esa preparación, para las sesiones normales basta con editar `Main.tex`
+y ejecutar `compilar_presentacion.bat`.
+
 ### Empezar una sesión de trabajo
 
 Después de clonar el repositorio, abre la carpeta raíz `Redes RF` en VS Code.

@@ -25,6 +25,14 @@ El script compila dos veces, reemplaza Main.pdf y crea un commit de Git
 únicamente si el PDF cambió. No hace push automáticamente; después de revisar
 el PDF se debe ejecutar `git push origin main`.
 
+Preparación de un solo clic:
+  .\preparar_espacio_trabajo.bat
+
+Este ejecutable verifica Git y TinyTeX/TeX Live, actualiza el repositorio con
+origin/main, instala los paquetes TeX, compila dos veces y actualiza Main.pdf.
+Si el PDF cambió, crea un commit. No hace push automáticamente.
+Se detiene si encuentra cambios locales para no sobrescribir trabajo.
+
 Para comenzar una sesión, abre en VS Code la raíz del repositorio, la carpeta
 que contiene .git, README.md, 00_Recursos, 01_Practicas y 02_Software.
 Después actualiza el espacio de trabajo:
